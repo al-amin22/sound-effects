@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->string('file_path');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->bigInteger('category_id');
             $table->timestamps();
         });
     }
