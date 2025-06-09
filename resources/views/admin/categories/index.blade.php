@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
-@section('title', 'Manajemen Kategori')
-@section('page_title', 'Manajemen Kategori')
+@section('title', 'Manajemen category')
+@section('page_title', 'Manajemen category')
 
 @section('content')
 <div x-data="categoryModal()" class="space-y-6">
@@ -12,7 +12,7 @@
     <!-- Tombol Tambah -->
     <div class="flex justify-end">
         <button @click="openCreate()" class="bg-blue-600 text-white px-4 py-2 rounded shadow">
-            + Tambah Kategori
+            + add category
         </button>
     </div>
 
@@ -22,6 +22,7 @@
             <thead class="bg-gray-50">
                 <tr>
                     <th class="text-left px-4 py-3">Category</th>
+                    <th class="text-left px-4 py-3">Description</th>
                     <th class="text-left px-4 py-3">Slug</th>
                     <th class="px-4 py-3">Action</th>
                 </tr>
@@ -30,10 +31,15 @@
                 @foreach ($categories as $category)
                 <tr>
                     <td class="px-4 py-2">{{ $category->name }}</td>
+                    <td class="px-4 py-2">{{ $category->description }}</td>
                     <td class="px-4 py-2 text-gray-500">{{ $category->slug }}</td>
                     <td class="px-4 py-2 text-center space-x-2">
-                        <button @click="openEdit({{ $category->id }}, '{{ $category->name }}')" class="text-blue-600 hover:underline">Edit</button>
-                        <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus kategori ini?')">
+                        <button
+                            @click="openEdit({{ $category->id }}, '{{ addslashes($category->name) }}', '{{ addslashes($category->description) }}')"
+                            class="text-blue-600 hover:underline">
+                            Edit
+                        </button>
+                        <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" class="inline-block" onsubmit="return confirm('Delete this category?')">
                             @csrf @method('DELETE')
                             <button class="text-red-600 hover:underline">Delete</button>
                         </form>
@@ -52,7 +58,7 @@
     <!-- Modal -->
     <div x-show="showModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" style="display: none;">
         <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6" @click.away="close()">
-            <h2 class="text-lg font-semibold mb-4" x-text="isEdit ? 'Edit Kategori' : 'Tambah Kategori'"></h2>
+            <h2 class="text-lg font-semibold mb-4" x-text="isEdit ? 'Edit Category' : 'Add Category'"></h2>
 
             <form :action="formAction" method="POST">
                 @csrf
@@ -61,8 +67,13 @@
                 </template>
 
                 <div class="mb-4">
-                    <label class="block text-sm mb-1">Name Category</label>
-                    <input type="text" name="name" x-model="formData.name" required class="w-full border-gray-300 rounded px-3 py-2" />
+                    <label class="block text-sm mb-1" for="name">Category Name</label>
+                    <input type="text" name="name" id="name" x-model="formData.name" required class="w-full border-gray-300 rounded px-3 py-2" />
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm mb-1" for="description">Description</label>
+                    <textarea name="description" id="description" x-model="formData.description" rows="4" class="w-full border-gray-300 rounded px-3 py-2"></textarea>
                 </div>
 
                 <div class="flex justify-end space-x-2">
@@ -84,17 +95,20 @@
             formAction: '{{ route("admin.categories.store") }}',
             formData: {
                 name: '',
+                description: ''
             },
             openCreate() {
                 this.isEdit = false;
                 this.formAction = '{{ route("admin.categories.store") }}';
                 this.formData.name = '';
+                this.formData.description = '';
                 this.showModal = true;
             },
-            openEdit(id, name) {
+            openEdit(id, name, description) {
                 this.isEdit = true;
                 this.formAction = '{{ route("admin.categories.update", ":id") }}'.replace(':id', id);
                 this.formData.name = name;
+                this.formData.description = description;
                 this.showModal = true;
             },
             close() {

@@ -37,7 +37,7 @@
             </div>
             <nav class="p-4 space-y-2 text-gray-700">
                 <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 rounded hover:bg-blue-100 hover:text-blue-600 transition">Dashboard</a>
-                <a href="#" class="block px-4 py-2 rounded hover:bg-blue-100 hover:text-blue-600 transition">Sound Effects</a>
+                <a href="{{ route('admin.soundeffects.index') }}" class="block px-4 py-2 rounded hover:bg-blue-100 hover:text-blue-600 transition">Sound Effects</a>
                 <a href="{{ route('admin.categories.index') }}" class="block px-4 py-2 rounded hover:bg-blue-100 hover:text-blue-600 transition">Kategori</a>
                 <a href="#" class="block px-4 py-2 rounded hover:bg-blue-100 hover:text-blue-600 transition">Pengguna</a>
                 <a href="#" class="block px-4 py-2 rounded hover:bg-blue-100 hover:text-blue-600 transition">Pengaturan</a>

@@ -9,7 +9,9 @@ use Illuminate\Support\Str;
 class Category extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['name', 'slug', 'description'];
+    protected $table = 'categories';
+    protected $primaryKey = 'id';
     public static function boot()
     {
         parent::boot();
