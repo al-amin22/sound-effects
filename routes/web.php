@@ -6,9 +6,10 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\SoundeffectController as AdminSoundeffectController;
 use App\Http\Controllers\CategoryController;
-
+use App\Http\Controllers\SitemapController;
 
 // Halaman umum tanpa auth
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/', [SoundEffectController::class, 'index'])->name('home');
 Route::get('/sound-effects/{id}', [SoundEffectController::class, 'show'])->name('sounds.show');
 Route::get('/sound-effects/{slug}', [SoundEffectController::class, 'show'])->name('sound.show');
