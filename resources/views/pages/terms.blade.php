@@ -30,6 +30,6 @@
 <p>These terms are governed by the laws applicable in the jurisdiction where Sound Effects Studio operates.</p>
 
 <h2 class="text-xl font-semibold mt-6 mb-2">Contact</h2>
-<p>If you have questions about these terms, please <a href="#contact" class="text-blue-600 hover:underline">contact us</a>.</p>
+<p>If you have questions about these terms, please <a href="{{ route('contact') }}" class="text-blue-600 hover:underline">contact us</a>.</p>
 
 @endsection
