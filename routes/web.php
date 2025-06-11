@@ -9,17 +9,17 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SitemapController;
 
 // Halaman umum tanpa auth
+Route::get('/about', [SoundEffectController::class, 'about'])->name('about');
+Route::get('/privacy-policy', [SoundEffectController::class, 'privacy'])->name('privacy');
+Route::get('/terms-of-use', [SoundEffectController::class, 'terms'])->name('terms');
+Route::get('/contact', [SoundEffectController::class, 'contact'])->name('contact');
+Route::get('/collection', [SoundEffectController::class, 'collection'])->name('collection');
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/', [SoundEffectController::class, 'index'])->name('home');
 Route::get('/{slug}', [SoundEffectController::class, 'show'])->name('sounds.show');
-// Route::get('/sound-effects/{slug}', [SoundEffectController::class, 'show'])->name('sound.show');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
-Route::view('/about', 'pages.about')->name('about');
-Route::view('/privacy-policy', 'pages.privacy')->name('privacy');
-Route::view('/terms-of-use', 'pages.terms')->name('terms');
-Route::view('/contact', 'contact')->name('contact');
-Route::view('collection', 'pages.collection')->name('collection');
-Route::post('/contact', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
+
 
 // Route auth protected (harus login)
 Route::middleware(['auth'])->group(function () {
