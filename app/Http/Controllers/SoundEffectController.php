@@ -16,10 +16,9 @@ class SoundEffectController extends Controller
         return view('home', compact('sounds', 'categories'));
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $sound = SoundEffect::with('category')->findOrFail($id);
-
+        $sound = SoundEffect::with('category')->where('slug', $slug)->firstOrFail();
         return view('sound-effects.show', compact('sound'));
     }
 }

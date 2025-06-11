@@ -11,8 +11,8 @@ use App\Http\Controllers\SitemapController;
 // Halaman umum tanpa auth
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/', [SoundEffectController::class, 'index'])->name('home');
-Route::get('/sound-effects/{id}', [SoundEffectController::class, 'show'])->name('sounds.show');
-Route::get('/sound-effects/{slug}', [SoundEffectController::class, 'show'])->name('sound.show');
+Route::get('/sound-effects/{slug}', [SoundEffectController::class, 'show'])->name('sounds.show');
+// Route::get('/sound-effects/{slug}', [SoundEffectController::class, 'show'])->name('sound.show');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
 Route::view('/about', 'pages.about')->name('about');
 Route::view('/privacy-policy', 'pages.privacy')->name('privacy');
