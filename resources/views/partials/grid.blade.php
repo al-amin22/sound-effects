@@ -3,7 +3,27 @@
 @section('title', 'Free Sound Effects')
 
 @section('content')
-<div class="container my-4">
+<!-- Hero Section -->
+<div class="hero-section position-relative" style="background: url('{{ asset('images/hero-section.png') }}') center center / cover no-repeat; height: 300px;">
+    <div class="overlay position-absolute w-100 h-100" style="background-color: rgba(0, 0, 0, 0.5);"></div>
+    <div class="container h-100 position-relative z-1 d-flex flex-column justify-content-center align-items-center text-white">
+        <h1 class="display-5 mb-3 text-center">Find & Download Free Sound Effects</h1>
+        <form action="{{ route('search') }}" method="GET" class="w-100" style="max-width: 600px;">
+            <div class="input-group">
+                <input type="text" name="query" class="form-control" placeholder="Search for sound effects..." value="{{ request('query') }}">
+                <button class="btn btn-light" type="submit">Search</button>
+            </div>
+        </form>
+        @foreach ($categories as $category)
+        <a href="{{ route('category.show', $category->slug) }}" class="badge bg-primary text-decoration-none mb-2">
+            {{ $category->name }}
+        </a>
+        @endforeach
+    </div>
+</div>
+
+<!-- Sound List -->
+<div class="container my-5">
     <div class="row">
         @foreach($sounds as $s)
         <div class="col-12 col-sm-6 col-md-4 mb-4">
@@ -39,10 +59,22 @@
             </article>
         </div>
         @endforeach
+
+        @if($sounds->isEmpty())
+        <div class="col-12">
+            <div class="alert alert-warning text-center">
+                Tidak ada hasil yang ditemukan untuk kata kunci <strong>"{{ request('query') }}"</strong>.
+            </div>
+        </div>
+        @endif
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        {{ $sounds->links() }}
     </div>
 </div>
 
-<!-- Modal Pop-up -->
+<!-- Modal Download -->
 <div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-center p-4">

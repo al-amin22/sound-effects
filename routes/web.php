@@ -16,6 +16,8 @@ Route::get('/contact', [SoundEffectController::class, 'contact'])->name('contact
 Route::get('/collection', [SoundEffectController::class, 'collection'])->name('collection');
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/search', [SoundEffectController::class, 'search'])->name('search');
+// Halaman utama
 Route::get('/', [SoundEffectController::class, 'index'])->name('home');
 Route::get('/{slug}', [SoundEffectController::class, 'show'])->name('sounds.show');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');

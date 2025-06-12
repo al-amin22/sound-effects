@@ -16,6 +16,18 @@ class SoundEffectController extends Controller
         return view('home', compact('sounds', 'categories'));
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $sounds = SoundEffect::with('category')
+            ->where('title', 'like', '%' . $query . '%')
+            ->orWhere('description', 'like', '%' . $query . '%')
+            ->latest()
+            ->paginate(12);
+
+        return view('home', compact('sounds', 'query'));
+    }
+
     public function show($slug)
     {
         $sound = SoundEffect::with('category')->where('slug', $slug)->firstOrFail();
