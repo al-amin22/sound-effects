@@ -8,7 +8,10 @@ use App\Http\Controllers\Admin\SoundeffectController as AdminSoundeffectControll
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SitemapController;
 
+
+
 // Halaman umum tanpa auth
+Route::get('/login', [SoundEffectController::class, 'login'])->name('login');
 Route::get('/about', [SoundEffectController::class, 'about'])->name('about');
 Route::get('/privacy-policy', [SoundEffectController::class, 'privacy'])->name('privacy');
 Route::get('/terms-of-use', [SoundEffectController::class, 'terms'])->name('terms');
@@ -17,11 +20,6 @@ Route::get('/collection', [SoundEffectController::class, 'collection'])->name('c
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/search', [SoundEffectController::class, 'search'])->name('search');
-// Halaman utama
-Route::get('/', [SoundEffectController::class, 'index'])->name('home');
-Route::get('/{slug}', [SoundEffectController::class, 'show'])->name('sounds.show');
-Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
-
 
 // Route auth protected (harus login)
 Route::middleware(['auth'])->group(function () {
@@ -46,5 +44,11 @@ Route::middleware(['auth'])->group(function () {
             'destroy' => 'admin.soundeffects.destroy'
         ]);
 });
+
+// Halaman utama
+Route::get('/', [SoundEffectController::class, 'index'])->name('home');
+Route::get('/{slug}', [SoundEffectController::class, 'show'])->name('sounds.show');
+Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
+
 
 require __DIR__ . '/auth.php';

@@ -54,4 +54,9 @@ class SoundEffectController extends Controller
     {
         return view('pages.collection');
     }
+
+    public function login()
+    {
+        return view('auth.login');
+    }
 }

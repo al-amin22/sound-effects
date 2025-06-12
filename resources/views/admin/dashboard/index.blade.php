@@ -22,27 +22,5 @@
             <p class="text-3xl font-bold text-purple-600">{{ $data['total_categories'] }}</p>
         </div>
     </div>
-
-    <div class="bg-white shadow rounded-xl p-6">
-        <h2 class="text-xl font-semibold text-gray-700 mb-4">Recent Sound Uploads</h2>
-
-        @if($data['recent_sounds']->count())
-        <ul class="divide-y divide-gray-200">
-            @foreach ($data['recent_sounds'] as $sound)
-            <li class="py-3 flex justify-between items-center">
-                <div>
-                    <p class="text-gray-800 font-medium">{{ $sound->title }}</p>
-                    <p class="text-sm text-gray-500">Uploaded at {{ $sound->created_at->format('d M Y H:i') }}</p>
-                </div>
-                <a href="{{ route('sound.show', $sound->slug) }}" target="_blank" class="text-blue-600 hover:underline text-sm">
-                    View
-                </a>
-            </li>
-            @endforeach
-        </ul>
-        @else
-        <p class="text-gray-500">No recent sounds found.</p>
-        @endif
-    </div>
 </div>
 @endsection
