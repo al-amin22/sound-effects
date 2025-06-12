@@ -22,7 +22,7 @@
             </a>
         </p>
 
-        <a href="{{ route('home') }}" class="btn btn-secondary mt-3">Kembali ke daftar</a>
+        <a href="{{ route('home') }}" class="btn btn-secondary mt-3">Back</a>
     </article>
 </div>
 @endsection
