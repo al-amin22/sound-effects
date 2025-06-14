@@ -22,6 +22,8 @@
 
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     @stack('head')
 </head>
@@ -129,6 +131,7 @@
             <main class="w-full flex-1 px-4 md:px-6 py-6">
                 @yield('content')
             </main>
+
         </div>
 
 

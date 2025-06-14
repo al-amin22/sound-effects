@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class SoundeffectController extends Controller
 {
@@ -34,6 +35,7 @@ class SoundeffectController extends Controller
 
         SoundEffect::create([
             'title' => $request->title,
+            'keywords' => $request->keywords, // Pastikan field 'keywords' ada di model SoundEffect
             'slug' => Str::slug($request->title),
             'description' => $request->description,
             'file_path' => $path,
@@ -47,42 +49,44 @@ class SoundeffectController extends Controller
     public function update(Request $request, SoundEffect $soundEffect)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'title' => 'required|max:255|unique:sound_effects,title,' . $soundEffect->id,
+            'description' => 'nullable|max:500',
             'category_id' => 'required|exists:categories,id',
         ]);
 
+        $data = [
+            'title' => $request->title,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'slug' => Str::slug($request->title),
+        ];
+
+        // Tambahkan jika field keywords disediakan
+        if ($request->has('keywords')) {
+            $data['keywords'] = $request->keywords;
+        }
+
+        // Jika file diupload, update file_path
         if ($request->hasFile('file_path')) {
-            // Cek dulu file_path tidak null dan file ada sebelum hapus
-            if ($soundEffect->file_path && Storage::disk('public')->exists($soundEffect->file_path)) {
-                Storage::disk('public')->delete($soundEffect->file_path);
-            }
-
-            // Simpan file baru
             $file = $request->file('file_path');
-            $soundEffect->file_path = $file->store('sound_effects', 'public');
+            $data['file_path'] = $file->store('sound_effects', 'public');
         }
 
-        $soundEffect->title = $request->title;
-        $soundEffect->slug = Str::slug($request->title);
-        $soundEffect->description = $request->description;
-        $soundEffect->category_id = $request->category_id;
-        $soundEffect->save();
+        $soundEffect->update($data);
 
-        return redirect()->route('admin.soundeffects.index')->with('success', 'Sound effect updated successfully.');
-    }
-
-    public function destroy(SoundEffect $soundEffect)
-    {
-        // Hapus file audio dari storage (jika ada)
-        if ($soundEffect->file_path && Storage::disk('public')->exists($soundEffect->file_path)) {
-            Storage::disk('public')->delete($soundEffect->file_path);
-        }
-
-        // Hapus sound effect dari database
-        $soundEffect->delete();
+        // dd($data); // Hapus ini setelah debugging
 
         return redirect()->route('admin.soundeffects.index')
-            ->with('success', 'Sound effect and its file have been deleted.');
+            ->with('success', 'Sound effect updated successfully.');
+    }
+
+
+    public function destroy($id)
+    {
+        $soundEffect = SoundEffect::findOrFail($id);
+        $soundEffect->forceDelete();
+
+        return redirect()->route('admin.soundeffects.index')
+            ->with('success', 'Sound effect deleted.');
     }
 }

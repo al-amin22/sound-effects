@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Free Sound Effects')
+@section('keywords', 'free sound effects, royalty free sound effects, sound effects download, audio effects, video editing sounds, game sounds, sound library, free SFX 2025')
 @section('description', 'Download and listen to royalty-free sound effects for your creative projects.')
 
 @section('content')
