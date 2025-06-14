@@ -36,7 +36,7 @@
                     <td class="px-4 py-2 text-gray-500">{{ Str::limit($se->description, 50) }}</td>
                     <td class="px-4 py-2">
                         <audio controls class="w-full max-w-xs">
-                            <source src="{{ asset('storage/' . $se->file_path) }}" type="audio/mpeg">
+                            <source src="{{ asset($se->file_path) }}" type="audio/mpeg">
                             Your browser does not support the audio tag.
                         </audio>
                     </td>
