@@ -5,7 +5,7 @@
     <title>@yield('title', 'Free Sound Effects Library 2025') – soundeffectsfree.com</title>
 
     <meta name="description" content="@yield('description', 'Download free sound effects for videos, games, films, and more. Discover high-quality, royalty-free audio files updated regularly on soundeffectsfree.com.')">
-    <meta name="keywords" content="@yield('keywords', 'free sound effects, royalty free sound effects, sound effects download, audio effects, video editing sounds, game sounds, sound library, free SFX 2025')">
+    <meta name="keywords" content="@yield('keywords', free sound effects, royalty free sound effects, sound effects download, audio effects, video editing sounds, game sounds, sound library, free SFX 2025">
     <link rel="canonical" href="{{ url()->current() }}">
 
     <!-- Open Graph / Facebook -->
@@ -59,7 +59,7 @@
     </script>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.ico') }}">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
