@@ -99,14 +99,32 @@
         @endforelse
     </div>
 
-    <!-- Pagination -->
-    @if($soundPacks->hasPages())
-    <div class="row mt-4">
-        <div class="col-12">
-            {{ $soundPacks->links() }}
-        </div>
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Sound effects pagination">
+            <ul class="pagination pagination-lg flex-wrap justify-content-center"> <!-- Added flex-wrap and justify-content-center -->
+                {{-- Previous Button --}}
+                <li class="page-item {{ $soundPacks->onFirstPage() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $soundPacks->previousPageUrl() }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                {{-- Page Numbers --}}
+                @foreach ($soundPacks->getUrlRange(1, $soundPacks->lastPage()) as $page => $url)
+                <li class="page-item {{ $page == $soundPacks->currentPage() ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                </li>
+                @endforeach
+
+                {{-- Next Button --}}
+                <li class="page-item {{ !$soundPacks->hasMorePages() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $soundPacks->nextPageUrl() }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
-    @endif
 </div>
 @endsection
 
