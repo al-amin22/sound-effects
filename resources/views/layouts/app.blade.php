@@ -87,8 +87,21 @@
         }
     </style>
 
-</head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S2M168YR5Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-S2M168YR5Z');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1555848721226553"
+        crossorigin="anonymous"></script>
+
+</head>
 
 <body>
     @include('partials.nav')
