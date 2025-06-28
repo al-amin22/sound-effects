@@ -55,7 +55,7 @@ Route::fallback(function () {
 });
 
 // Sound Packs Routes
-Route::prefix('sound-packs')->name('sound-packs.')->group(function () {
+Route::prefix('public/sound-packs')->name('sound-packs.')->group(function () {
     // Main index page with search and filter
     Route::get('/', [SoundPackController::class, 'index'])
         ->name('index');
