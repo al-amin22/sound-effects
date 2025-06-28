@@ -45,54 +45,48 @@ Route::middleware(['auth'])->group(function () {
         ]);
 });
 
+
 // Halaman utama
 Route::get('/', [SoundEffectController::class, 'index'])->name('home');
-Route::get('/{slug}', [SoundEffectController::class, 'show'])->name('sounds.show');
-Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
+// Sound Packs Routes - MOVED BEFORE GENERIC ROUTES
+Route::prefix('sound-packs')->group(function () {
+    Route::get('/', [SoundPackController::class, 'index'])->name('sound-packs.index');
 
-Route::fallback(function () {
-    return response()->view('errors.404', [], 404);
-});
+    // Pindahkan route show ke atas dalam group
+    Route::get('/{slug}', [SoundPackController::class, 'show'])
+        ->name('sound-packs.show');
 
-// Sound Packs Routes
-Route::prefix('public/sound-packs')->name('sound-packs.')->group(function () {
-    // Main index page with search and filter
-    Route::get('/', [SoundPackController::class, 'index'])
-        ->name('index');
-
-    // Country filter
     Route::get('/country/{country}', [SoundPackController::class, 'indexByCountry'])
         ->where('country', '[A-Z]{2}')
-        ->name('country');
+        ->name('sound-packs.country');
 
-    // Category filter
     Route::get('/category/{category}', [SoundPackController::class, 'indexByCategory'])
-        ->name('category');
+        ->name('sound-packs.category');
 
-    // Search
     Route::get('/search', [SoundPackController::class, 'search'])
-        ->name('search');
+        ->name('sound-packs.search');
 
-    // Single pack view
-    Route::get('/{slug}', [SoundPackController::class, 'show'])
-        ->name('show');
-
-    // Download
     Route::get('/{slug}/download', [SoundPackController::class, 'download'])
-        ->name('download');
+        ->name('sound-packs.download');
 
-    // API endpoints for AJAX
+    // API endpoints
     Route::prefix('api')->group(function () {
         Route::get('/sounds/{pack}', [SoundPackController::class, 'getSounds'])
-            ->name('api.sounds');
+            ->name('sound-packs.api.sounds');
         Route::get('/related/{pack}', [SoundPackController::class, 'getRelatedPacks'])
-            ->name('api.related');
+            ->name('sound-packs.api.related');
     });
 });
 
-// Redirect for legacy URLs
-Route::get('/packs/{slug}', function ($slug) {
-    return redirect()->route('sound-packs.show', $slug, 301);
+// Other routes
+Route::get('/{slug}', [SoundEffectController::class, 'show'])->name('sounds.show');
+Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
+Route::get('/{slug}', [SoundEffectController::class, 'show'])->name('sounds.show');
+Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
+
+
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
 });
 
 require __DIR__ . '/auth.php';

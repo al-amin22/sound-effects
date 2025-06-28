@@ -26,9 +26,13 @@ class SoundPackController extends Controller
 
         $soundPacks = $query->paginate(12);
 
+        // Tambahkan ini untuk mengirim categories ke view
+        $categories = Category::all();
+
         return view('sound-packs.index', [
             'soundPacks' => $soundPacks,
-            'searchTerm' => $request->q ?? null
+            'searchTerm' => $request->q ?? null,
+            'categories' => $categories // Variabel yang diperlukan
         ]);
     }
 
@@ -41,9 +45,13 @@ class SoundPackController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(12);
 
+        // Tambahkan ini
+        $categories = Category::all();
+
         return view('sound-packs.index', [
             'soundPacks' => $soundPacks,
-            'currentCountry' => $country
+            'currentCountry' => $country,
+            'categories' => $categories // Variabel yang diperlukan
         ]);
     }
 
@@ -58,9 +66,13 @@ class SoundPackController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(12);
 
+        // Tambahkan ini
+        $categories = Category::all();
+
         return view('sound-packs.index', [
             'soundPacks' => $soundPacks,
-            'currentCategory' => $category
+            'currentCategory' => $category,
+            'categories' => $categories // Variabel yang diperlukan
         ]);
     }
 
@@ -77,7 +89,9 @@ class SoundPackController extends Controller
     // Show single sound pack
     public function show($slug)
     {
-        $soundPack = SoundPack::where('slug', 'sound-packs/' . $slug)
+        // Coba kedua format slug
+        $soundPack = SoundPack::where('slug', $slug)
+            ->orWhere('slug', 'sound-packs/' . $slug)
             ->with(['category', 'sounds'])
             ->withCount('sounds')
             ->firstOrFail();

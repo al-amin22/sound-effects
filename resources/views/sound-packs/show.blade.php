@@ -48,7 +48,7 @@
                                         <source src="{{ asset($sound->audio_path) }}" type="audio/mpeg">
                                         Your browser does not support the audio element.
                                     </audio>
-                                    <a href="{{ route('sound-effects.show', $sound->slug) }}"
+                                    <a href="{{ route('sounds.show', $sound->slug) }}"
                                         class="btn btn-sm btn-outline-primary">
                                         Details
                                     </a>

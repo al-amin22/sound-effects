@@ -1,3 +1,5 @@
+// File: resources/views/sound-packs/index.blade.php
+
 @extends('layouts.app')
 
 @section('title', 'Sound Effect Packs Collection')
@@ -70,7 +72,7 @@
                 </a>
                 <div class="card-body">
                     <h2 class="h5 card-title mb-1">
-                        <a href="{{ route('sound-packs.show', Str::after($pack->slug, 'sound-packs/')) }}"
+                        <a href="{{ route('sound-packs.show', $pack->slug) }}"
                             class="text-decoration-none text-dark">
                             {{ $pack->name }}
                         </a>
