@@ -1,5 +1,3 @@
-// File: resources/views/sound-packs/index.blade.php
-
 @extends('layouts.app')
 
 @section('title', 'Sound Effect Packs Collection')
