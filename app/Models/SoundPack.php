@@ -22,6 +22,7 @@ class SoundPack extends Model
         return $this->belongsTo(Category::class);
     }
 
+
     public function sounds()
     {
         return $this->hasMany(SoundEffect::class, 'pack_id');

@@ -63,7 +63,7 @@
                 <section class="mb-5">
                     <h2 class="h4 mb-3">About This Sound Pack</h2>
                     <div class="content">
-                        {!! $soundPack->sounds->first()->article !!}
+                        {!! $articleHtml !!}
                     </div>
                 </section>
                 @endif

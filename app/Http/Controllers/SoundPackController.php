@@ -7,6 +7,7 @@ use App\Models\SoundEffect;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Parsedown;
 
 class SoundPackController extends Controller
 {
@@ -89,7 +90,6 @@ class SoundPackController extends Controller
     // Show single sound pack
     public function show($slug)
     {
-        // Coba kedua format slug
         $soundPack = SoundPack::where('slug', $slug)
             ->orWhere('slug', 'sound-packs/' . $slug)
             ->with(['category', 'sounds'])
@@ -102,17 +102,25 @@ class SoundPackController extends Controller
             ->limit(4)
             ->get();
 
+        // Konversi Markdown ke HTML
+        $parsedown = new Parsedown();
+        $descriptionHtml = $parsedown->text($soundPack->description);
+
         // SEO Meta
         $seoTitle = $soundPack->seo_title ?? "{$soundPack->name} Sound Pack | Download Free SFX";
-        $seoDescription = $soundPack->seo_description ??
-            Str::limit(strip_tags($soundPack->description), 160) ??
-            "Download {$soundPack->name} sound pack with {$soundPack->sounds_count} high-quality sound effects.";
+        $seoDescription = $soundPack->seo_description ?? Str::limit(strip_tags($soundPack->description), 160);
+
+        $firstArticle = optional($soundPack->sounds->first())->article;
+        $parsedown = new Parsedown();
+        $articleHtml = $firstArticle ? $parsedown->text($firstArticle) : null;
 
         return view('sound-packs.show', [
             'soundPack' => $soundPack,
             'relatedPacks' => $relatedPacks,
             'seoTitle' => $seoTitle,
-            'seoDescription' => $seoDescription
+            'seoDescription' => $seoDescription,
+            'descriptionHtml' => $descriptionHtml,
+            'articleHtml' => $articleHtml,
         ]);
     }
 

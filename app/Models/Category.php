@@ -28,4 +28,9 @@ class Category extends Model
     {
         return $this->hasMany(SoundEffect::class);
     }
+
+    public function soundPacks()
+    {
+        return $this->hasMany(SoundPack::class);
+    }
 }
