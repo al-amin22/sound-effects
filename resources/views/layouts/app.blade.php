@@ -2,25 +2,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>@yield('title', 'Free Sound Effects Library 2025') – soundeffectsfree.com</title>
+    <title>@yield('title', $meta['title'] ?? 'Free Sound Effects Library 2025') – soundeffectsfree.com</title>
 
-    <meta name="description" content="@yield('description', 'Download free sound effects for videos, games, films, and more. Discover high-quality, royalty-free audio files updated regularly on soundeffectsfree.com.')">
-    <meta name="keywords" content="@yield('keywords', free sound effects, royalty free sound effects, sound effects download, audio effects, video editing sounds, game sounds, sound library, free SFX 2025">
+    <meta name="description" content="@yield('description', $meta['description'] ?? 'Download free sound effects for videos, games, films, and more. Discover high-quality, royalty-free audio files updated regularly on soundeffectsfree.com.')">
+
+    <meta name="keywords" content="@yield('keywords', $meta['keywords'] ?? 'free sound effects, royalty free sound effects, sound effects download, audio effects, video editing sounds, game sounds, sound library, free SFX 2025')">
+
     <link rel="canonical" href="{{ url()->current() }}">
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="@yield('og_type', 'website')">
-    <meta property="og:title" content="@yield('og_title', 'Free Sound Effects Library 2025 – soundeffectsfree.com')">
-    <meta property="og:description" content="@yield('description', 'Explore our growing collection of free sound effects for creative projects. All files are free to use and regularly updated.')">
-    <meta property="og:image" content="@yield('og_image', asset('images/og-soundeffectsfree2025.jpg'))">
+    <meta property="og:type" content="@yield('og_type', $meta['og_type'] ?? 'website')">
+    <meta property="og:title" content="@yield('og_title', $meta['og_title'] ?? 'Free Sound Effects Library 2025 – soundeffectsfree.com')">
+    <meta property="og:description" content="@yield('og_description', $meta['og_description'] ?? 'Explore our growing collection of free sound effects for creative projects. All files are free to use and regularly updated.')">
+    <meta property="og:image" content="@yield('og_image', $meta['og_image'] ?? asset('images/og-soundeffectsfree2025.jpg'))">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:site_name" content="soundeffectsfree.com">
+    <meta property="og:audio" content="{{ $meta['og_audio'] ?? '' }}">
+    <meta property="og:audio:type" content="audio/mpeg">
+    @isset($soundEffect->duration)
+    <meta property="og:audio:duration" content="{{ $soundEffect->duration }}">
+    @endisset
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@yield('twitter_title', 'Free Sound Effects Library 2025 – soundeffectsfree.com')">
-    <meta name="twitter:description" content="@yield('description', 'Download high-quality free sound effects for your creative projects. 100% royalty-free and updated regularly.')">
-    <meta name="twitter:image" content="@yield('twitter_image', asset('images/twitter-soundeffectsfree2025.jpg'))">
+    <meta name="twitter:title" content="@yield('twitter_title', $meta['twitter_title'] ?? 'Free Sound Effects Library 2025 – soundeffectsfree.com')">
+    <meta name="twitter:description" content="@yield('twitter_description', $meta['twitter_description'] ?? 'Download high-quality free sound effects for your creative projects. 100% royalty-free and updated regularly.')">
+    <meta name="twitter:image" content="@yield('twitter_image', $meta['twitter_image'] ?? asset('images/twitter-soundeffectsfree2025.jpg'))">
     <meta name="twitter:site" content="@soundeffectsfree">
 
     <!-- Robots -->
@@ -79,6 +86,7 @@
             flex: 1;
         }
     </style>
+
 </head>
 
 

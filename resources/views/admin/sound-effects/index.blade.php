@@ -1,50 +1,56 @@
-@extends('admin.layouts.app')
-@section('title', 'Sound Effects Management')
-@section('page_title', 'Sound Effects Management')
+<!DOCTYPE html>
+<html lang="id">
 
-@section('content')
-<div x-data="soundEffectModal()" class="space-y-6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound Effects - Admin</title>
+    <meta name="description" content="Manajemen data sound effects untuk soundeffectsfree.com">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 
-    @if(session('success'))
-    <div class="bg-green-100 text-green-800 p-2 rounded">{{ session('success') }}</div>
-    @endif
+<body>
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3">Daftar Sound Effects</h1>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">Tambah Sound</button>
+        </div>
 
-    <!-- Add Button -->
-    <div class="flex justify-end">
-        <button @click="openCreate()" class="bg-blue-600 text-white px-4 py-2 rounded shadow">
-            + Add Sound Effect
-        </button>
-    </div>
+        @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
-    <!-- Sound Effects Table -->
-    <div class="overflow-x-auto bg-white rounded shadow">
-        <table class="min-w-full divide-y divide-gray-200 text-sm">
-            <thead class="bg-gray-50">
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    <th class="text-left px-4 py-3">Title</th>
-                    <th class="text-left px-4 py-3">Category</th>
-                    <th class="text-left px-4 py-3">Description</th>
-                    <th class="text-left px-4 py-3">Audio File</th>
-                    <th class="px-4 py-3">Actions</th>
+                    <th>#</th>
+                    <th>title</th>
+                    <th>Catrgory</th>
+                    <th>Audio</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-100">
-                @foreach ($soundEffects as $se)
+            <tbody>
+                @foreach($soundEffects as $index => $sound)
                 <tr>
-                    <td class="px-4 py-2">{{ $se->title }}</td>
-                    <td class="px-4 py-2 text-gray-600">{{ $se->category->name ?? '-' }}</td>
-                    <td class="px-4 py-2 text-gray-500">{{ Str::limit($se->description, 50) }}</td>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $sound->title }}</td>
+
                     <td class="px-4 py-2">
                         <audio controls class="w-full max-w-xs">
-                            <source src="{{ asset($se->file_path) }}" type="audio/mpeg">
+                            <source src="{{ asset($sound->file_path) }}" type="audio/mpeg">
                             Your browser does not support the audio tag.
                         </audio>
                     </td>
-                    <td class="px-4 py-2 text-center space-x-2">
-                        <button @click="openEdit({{ $se->id }}, '{{ $se->title }}', '{{ $se->description }}', '{{ $se->category_id }}')" class="text-blue-600 hover:underline">Edit</button>
-                        <form action="{{ route('admin.soundeffects.destroy', $se) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this sound effect?')">
-                            @csrf @method('DELETE')
-                            <button class="text-red-600 hover:underline">Delete</button>
+
+                    <td>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $sound->id }}">
+                            Edit
+                        </button>
+                        <form method="POST" action="{{ route('admin.soundeffects.destroy', $sound->id) }}" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin hapus?')">Hapus</button>
                         </form>
                     </td>
                 </tr>
@@ -53,94 +59,110 @@
         </table>
     </div>
 
-    <!-- Pagination -->
-    <div>
-        {{ $soundEffects->links() }}
-    </div>
-
-    <!-- Modal -->
-    <div x-show="showModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" style="display: none;">
-        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6" @click.away="close()">
-            <h2 class="text-lg font-semibold mb-4" x-text="isEdit ? 'Edit Sound Effect' : 'Add Sound Effect'"></h2>
-
-            <form :action="formAction" method="POST" enctype="multipart/form-data">
+    <!-- Modal Create -->
+    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="POST" action="{{ route('admin.soundeffects.store') }}" enctype="multipart/form-data" class="modal-content">
                 @csrf
-                <template x-if="isEdit">
-                    <input type="hidden" name="_method" value="PUT">
-                </template>
-
-                <div class="mb-4">
-                    <label class="block text-sm mb-1">Title</label>
-                    <input type="text" name="title" x-model="formData.title" required class="w-full border-gray-300 rounded px-3 py-2" />
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Tambah Sound Effect</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
-                <div class="mb-4">
-                    <label class="block text-sm mb-1">Description</label>
-                    <textarea name="description" x-model="formData.description" rows="2" class="w-full border-gray-300 rounded px-3 py-2"></textarea>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nama</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="file" class="form-label">File Suara (.mp3, .wav)</label>
+                        <input type="file" name="file" class="form-control" accept="audio/*" required>
+                    </div>
                 </div>
-
-                <div class="mb-4">
-                    <label class="block text-sm mb-1">Category</label>
-                    <select name="category_id" x-model="formData.category_id" required class="w-full border-gray-300 rounded px-3 py-2">
-                        <option value="">-- Select Category --</option>
-                        @foreach($categories as $cat)
-                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="mb-4">
-                    <label class="block text-sm mb-1">Audio File (mp3/wav/ogg)</label>
-                    <input type="file" name="file_path" class="w-full border-gray-300 rounded px-3 py-2" :required="!isEdit" />
-                </div>
-
-                <div class="flex justify-end space-x-2">
-                    <button type="button" @click="close()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded">Cancel</button>
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded" x-text="isEdit ? 'Update' : 'Save'"></button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
     </div>
 
-</div>
+    <!-- Modal Edit -->
+    @foreach($soundEffects as $sound)
+    <div class="modal fade" id="editModal{{ $sound->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $sound->id }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action="{{ route('admin.soundeffects.update', $sound->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel{{ $sound->id }}">Edit Sound Effect</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Judul -->
+                        <div class="mb-3">
+                            <label for="title{{ $sound->id }}" class="form-label">Judul</label>
+                            <input type="text" class="form-control" id="title{{ $sound->id }}" name="title" value="{{ $sound->title }}" required>
+                        </div>
 
-<!-- AlpineJS Script -->
-<script>
-    function soundEffectModal() {
-        return {
-            showModal: false,
-            isEdit: false,
-            formAction: '{{ route("admin.soundeffects.store") }}',
-            formData: {
-                title: '',
-                description: '',
-                category_id: '',
-            },
-            openCreate() {
-                this.isEdit = false;
-                this.formAction = '{{ route("admin.soundeffects.store") }}';
-                this.formData = {
-                    title: '',
-                    description: '',
-                    category_id: ''
-                };
-                this.showModal = true;
-            },
-            openEdit(id, title, description, category_id) {
-                this.isEdit = true;
-                this.formAction = '{{ route("admin.soundeffects.update", ":id") }}'.replace(':id', id);
-                this.formData = {
-                    title: title,
-                    description: description,
-                    category_id: category_id
-                };
-                this.showModal = true;
-            },
-            close() {
-                this.showModal = false;
-            }
-        }
-    }
-</script>
+                        <!-- Keywords -->
+                        <div class="mb-3">
+                            <label for="keywords{{ $sound->id }}" class="form-label">Kata Kunci</label>
+                            <input type="text" class="form-control" id="keywords{{ $sound->id }}" name="keywords" value="{{ $sound->keywords }}">
+                        </div>
 
-@endsection
+                        <!-- Deskripsi -->
+                        <div class="mb-3">
+                            <label for="description{{ $sound->id }}" class="form-label">Deskripsi</label>
+                            <textarea class="form-control" id="description{{ $sound->id }}" name="description" rows="3">{{ $sound->description }}</textarea>
+                        </div>
+
+                        <!-- Kategori -->
+                        <div class="mb-3">
+                            <label for="category_id{{ $sound->id }}" class="form-label">Kategori</label>
+                            <select class="form-select" name="category_id" id="category_id{{ $sound->id }}" required>
+                                @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ $sound->category_id == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- File Baru (Opsional) -->
+                        <div class="mb-3">
+                            <label for="file_path{{ $sound->id }}" class="form-label">Upload Ulang File (MP3/WAV/OGG)</label>
+                            <input type="file" class="form-control" name="file_path" id="file_path{{ $sound->id }}">
+                            @if($sound->file_path)
+                            <small class="text-muted">File saat ini: <a href="{{ asset($sound->file_path) }}" target="_blank">Lihat / Putar</a></small>
+                            @endif
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @endforeach
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const editModal = document.getElementById('editModal');
+        editModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+
+            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-name').value = name;
+        });
+    </script>
+</body>
+
+</html>
