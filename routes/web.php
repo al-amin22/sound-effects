@@ -89,4 +89,5 @@ Route::fallback(function () {
     return response()->view('errors.404', [], 404);
 });
 
+// Auth routes`
 require __DIR__ . '/auth.php';
