@@ -50,5 +50,8 @@ Route::get('/', [SoundEffectController::class, 'index'])->name('home');
 Route::get('/{slug}', [SoundEffectController::class, 'show'])->name('sounds.show');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
 
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
 
 require __DIR__ . '/auth.php';
