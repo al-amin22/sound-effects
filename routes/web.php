@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\SoundeffectController as AdminSoundeffectControll
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SoundPackController;
-
+use App\Http\Controllers\SubscribeController;
 
 // Halaman umum tanpa auth
 Route::get('/login', [SoundEffectController::class, 'login'])->name('login');
@@ -18,6 +18,9 @@ Route::get('/terms-of-use', [SoundEffectController::class, 'terms'])->name('term
 Route::get('/contact', [SoundEffectController::class, 'contact'])->name('contact');
 Route::get('/collection', [SoundEffectController::class, 'collection'])->name('collection');
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
+Route::get('/licensing', [SoundEffectController::class, 'licensing'])->name('licensing');
+Route::get('/dmca', [SoundEffectController::class, 'dmca'])->name('dmca');
+Route::post('/subscribe', [SubscribeController::class, 'store'])->name('subscribe.store');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/search', [SoundEffectController::class, 'search'])->name('search');
 
@@ -83,8 +86,9 @@ Route::get('/{slug}', [SoundEffectController::class, 'show'])->name('sounds.show
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
 Route::get('/{slug}', [SoundEffectController::class, 'show'])->name('sounds.show');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
+Route::get('/{id}/download', [SoundEffectController::class, 'download'])->name('sounds.download');
 
-
+// Fallback route for 404 errors
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);
 });

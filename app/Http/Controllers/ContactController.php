@@ -13,6 +13,7 @@ class ContactController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'message' => 'required|string',
+            'subject' => 'required|string|max:255',
         ]);
 
         // Simpan ke database

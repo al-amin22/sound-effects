@@ -79,6 +79,40 @@ class SoundEffectController extends Controller
         ]);
     }
 
+    // app/Http/Controllers/SoundController.php
+    public function download($id)
+    {
+        $sound = SoundEffect::findOrFail($id);
+
+        // Increment download count
+        $sound->increment('downloads_count');
+
+        // Get the file path
+        $filePath = public_path($sound->audio_path);
+
+        // Check if file exists
+        if (!file_exists($filePath)) {
+            abort(404);
+        }
+
+        // Return the file as download
+        return response()->download($filePath, $sound->slug . '.mp3', [
+            'Content-Type' => 'audio/mpeg',
+        ]);
+    }
+
+    public function populerCategories()
+    {
+        $popularCategories = Category::withCount('soundEffects')
+            ->orderBy('sound_effects_count', 'desc')
+            ->take(5)
+            ->get();
+
+        return view('partials.footer', [
+            'popularCategories' => $popularCategories,
+        ]);
+    }
+
     public function about()
     {
         return view('pages.about');
@@ -104,5 +138,15 @@ class SoundEffectController extends Controller
     public function login()
     {
         return view('auth.login');
+    }
+
+    public function licensing()
+    {
+        return view('pages.licensing');
+    }
+
+    public function dmca()
+    {
+        return view('pages.dmca');
     }
 }

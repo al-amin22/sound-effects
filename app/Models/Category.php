@@ -12,6 +12,7 @@ class Category extends Model
     protected $fillable = ['name', 'slug', 'description'];
     protected $table = 'categories';
     protected $primaryKey = 'id';
+
     public static function boot()
     {
         parent::boot();
