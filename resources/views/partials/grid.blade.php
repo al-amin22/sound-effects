@@ -26,7 +26,7 @@
             <form action="{{ route('home') }}" method="GET" class="search-form">
                 <div class="input-group shadow-sm">
                     <input type="text" name="search" class="form-control border-primary" placeholder="Search sound effects..." value="{{ request('search') }}" aria-label="Search sound effects">
-                    <input type="hidden" name="category" value="{{ request('category') }}">
+                    <!-- <input type="hidden" name="category" value="{{ request('category') }}"> -->
                     <button class="btn btn-primary" type="submit">
                         <i class="fas fa-search"></i> Search
                     </button>
