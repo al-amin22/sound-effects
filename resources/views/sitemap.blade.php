@@ -40,7 +40,9 @@
     @foreach($soundEffects as $sound)
     <url>
         <loc>{{ url('/sound-effects/' . $sound->slug) }}</loc>
+        @if($sound->created_at)
         <lastmod>{{ $sound->created_at->toAtomString() }}</lastmod>
+        @endif
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -50,10 +52,11 @@
     @foreach($categories as $category)
     <url>
         <loc>{{ url('/category/' . $category->slug) }}</loc>
+        @if($category->created_at)
         <lastmod>{{ $category->created_at->toAtomString() }}</lastmod>
+        @endif
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
     @endforeach
-
 </urlset>
