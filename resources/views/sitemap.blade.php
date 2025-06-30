@@ -59,4 +59,17 @@
         <priority>0.7</priority>
     </url>
     @endforeach
+
+    {{-- Loop Soundpack --}}
+    @foreach($soundpacks as $soundpack)
+    <url>
+        <loc>{{ url('/soundpack/' . $soundpack->slug) }}</loc>
+        @if($soundpack->created_at)
+        <lastmod>{{ $soundpack->created_at->toAtomString() }}</lastmod>
+        @endif
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    @endforeach
+
 </urlset>
