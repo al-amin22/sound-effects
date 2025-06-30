@@ -63,7 +63,7 @@
     {{-- Loop Soundpack --}}
     @foreach($soundPacks as $soundpack)
     <url>
-        <loc>{{ url('/soundpack/' . $soundpack->slug) }}</loc>
+        <loc>{{ url('/' . $soundpack->slug) }}</loc>
         @if($soundpack->created_at)
         <lastmod>{{ $soundpack->created_at->toAtomString() }}</lastmod>
         @endif
