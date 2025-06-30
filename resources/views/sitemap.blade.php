@@ -61,7 +61,7 @@
     @endforeach
 
     {{-- Loop Soundpack --}}
-    @foreach($soundpacks as $soundpack)
+    @foreach($soundPacks as $soundpack)
     <url>
         <loc>{{ url('/soundpack/' . $soundpack->slug) }}</loc>
         @if($soundpack->created_at)
