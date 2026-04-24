@@ -1,66 +1,88 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sound Effects Library
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sound Effects Library adalah aplikasi web berbasis Laravel 10 untuk katalog, pencarian, dan pengunduhan sound effect serta sound pack. Proyek ini juga menyediakan manajemen kategori, unggah audio dan gambar, formulir kontak, langganan newsletter, serta fitur SEO dan sitemap.
 
-## About Laravel
+## Ringkasan
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aplikasi ini dirancang untuk membantu pengguna menemukan dan mengunduh efek suara yang relevan untuk video, game, animasi, dan proyek multimedia lainnya. Di sisi admin, sistem menyediakan pengelolaan data sound effect, sound pack, dan kategori secara terstruktur.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- katalog sound effect publik
+- halaman detail sound effect dengan metadata SEO dinamis
+- pencarian sound effect dan sound pack
+- filter berdasarkan kategori dan negara
+- halaman sound pack dengan daftar audio terkait
+- unduhan audio per sound effect
+- admin dashboard ringkas
+- CRUD kategori dan sound effect
+- unggah file audio dan gambar
+- formulir kontak dan newsletter
+- sitemap XML
+- halaman kebijakan, lisensi, DMCA, dan terms of use
 
-## Learning Laravel
+## Teknologi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Laravel 10
+- PHP 8.1+
+- Livewire
+- Laravel Sanctum
+- Laravel Breeze
+- Parsedown
+- Mews Purifier
+- Spatie Laravel Sitemap
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Modul Utama
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- `SoundEffectController`: halaman publik sound effect, detail, pencarian, dan download
+- `SoundPackController`: daftar, detail, filter, pencarian, dan API sound pack
+- `CategoryController`: tampilan sound berdasarkan kategori
+- `Admin\DashboardController`: ringkasan statistik admin
+- `Admin\CategoryController`: CRUD kategori
+- `Admin\SoundeffectController`: CRUD sound effect dan unggah file audio
+- `ContactController`: pengiriman pesan kontak
+- `SubscribeController`: langganan newsletter
+- `ImageController`: unggah gambar dan audio
+- `SitemapController`: pembuatan sitemap XML
 
-## Laravel Sponsors
+## Alur Kerja Singkat
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Pengunjung membuka beranda dan menelusuri katalog sound effect.
+2. Pengguna dapat mencari, memfilter, dan membuka halaman detail audio.
+3. File audio dapat diunduh dari halaman detail sound effect.
+4. Admin masuk ke dashboard untuk mengelola kategori dan sound effect.
+5. Konten SEO, sitemap, kontak, dan newsletter dikelola melalui modul pendukung.
 
-### Premium Partners
+## Rute Penting
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- `/`: halaman utama
+- `/search`: pencarian sound effect
+- `/collection`: koleksi sound effect
+- `/sound-packs`: daftar sound pack
+- `/sound-packs/{slug}`: detail sound pack
+- `/category/{slug}`: halaman kategori
+- `/login`: halaman login
+- `/admin/dashboard`: dashboard admin
+- `/sitemap.xml`: sitemap
 
-## Contributing
+## Dokumentasi Tambahan
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- [Project Overview](docs/PROJECT_OVERVIEW.md)
+- [User Guide](docs/USER_GUIDE.md)
 
-## Code of Conduct
+## Instalasi
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. Salin `.env.example` menjadi `.env`.
+2. Sesuaikan konfigurasi database dan aplikasi.
+3. Jalankan `composer install`.
+4. Jalankan `npm install`.
+5. Jalankan `php artisan key:generate`.
+6. Jalankan migrasi database bila diperlukan.
+7. Jalankan `npm run build`.
+8. Jalankan `php artisan serve`.
 
-## Security Vulnerabilities
+## Catatan Teknis
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- File audio disimpan di folder publik agar dapat diunduh langsung.
+- Metadata SEO dibentuk secara dinamis dari data sound effect dan sound pack.
+- Sitemap dan halaman kebijakan mendukung kebutuhan publikasi situs katalog audio.
